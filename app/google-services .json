@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "364415417589",
+    "firebase_url": "https://netmart-414c1.firebaseio.com",
+    "project_id": "netmart-414c1",
+    "storage_bucket": "netmart-414c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364415417589:android:cbfd85a21ec4fd3430d9bc",
+        "android_client_info": {
+          "package_name": "com.example.netmart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364415417589-pd3iduo5k8ct77pdjmir3shif28vloes.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.netmart",
+            "certificate_hash": "79d1127cd6687146ed5f2d262397baa8d0e3fb62"
+          }
+        },
+        {
+          "client_id": "364415417589-9f3cqj86fpq6j4ap0f7qm4iibaa6qssi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYsW4U2KVy0inuvduGUBV8EZpG1WyJohA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364415417589-9f3cqj86fpq6j4ap0f7qm4iibaa6qssi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364415417589:android:fc419c67d9bb597e30d9bc",
+        "android_client_info": {
+          "package_name": "com.netmart.netmart_main"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364415417589-0ub3oj70nmfvu5tmae7rh5nje3rfihlp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.netmart.netmart_main",
+            "certificate_hash": "79d1127cd6687146ed5f2d262397baa8d0e3fb62"
+          }
+        },
+        {
+          "client_id": "364415417589-9f3cqj86fpq6j4ap0f7qm4iibaa6qssi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYsW4U2KVy0inuvduGUBV8EZpG1WyJohA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364415417589-9f3cqj86fpq6j4ap0f7qm4iibaa6qssi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:364415417589:android:5ed6747637f5467730d9bc",
+        "android_client_info": {
+          "package_name": "com.test.netmartdeliverer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "364415417589-vu5bsrpm9sfu9mlg1afsl8vnr04dpgbf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test.netmartdeliverer",
+            "certificate_hash": "79d1127cd6687146ed5f2d262397baa8d0e3fb62"
+          }
+        },
+        {
+          "client_id": "364415417589-9f3cqj86fpq6j4ap0f7qm4iibaa6qssi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYsW4U2KVy0inuvduGUBV8EZpG1WyJohA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "364415417589-9f3cqj86fpq6j4ap0f7qm4iibaa6qssi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

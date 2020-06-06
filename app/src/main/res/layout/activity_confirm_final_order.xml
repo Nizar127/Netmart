@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConfirmFinalOrderActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_final_order"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimaryDark">
+
+            <ImageView
+                android:id="@+id/back_btn_final_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_arrow_back_white_50dp" />
+
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@color/DarkCyan"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Destination Address"
+                android:textColor="@color/White"
+                android:textSize="25sp"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scroll_conf_final_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar_final_order"
+            android:layout_above="@+id/conf_final_order_conf_btn">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sender Information:"
+                    android:textSize="20dp"
+                    android:layout_margin="15dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: "
+                    android:textSize="20dp"
+                    android:layout_marginLeft="17dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/conf_final_order_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:hint="Sender's Name"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone Number: "
+                    android:textSize="20dp"
+                    android:layout_marginLeft="17dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/conf_final_order_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/conf_final_order_name"
+                    android:layout_margin="15dp"
+                    android:hint="Sender's Phone Number"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Retrieving Address:"
+                    android:textSize="20dp"
+                    android:layout_margin="15dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="House Number: "
+                    android:textSize="20dp"
+                    android:layout_marginLeft="17dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/conf_final_order_house_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/conf_final_order_phone"
+                    android:layout_margin="15dp"
+                    android:hint="Retrieving House Number"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Street: "
+                    android:textSize="20dp"
+                    android:layout_marginLeft="17dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/conf_final_order_street"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/conf_final_order_house_no"
+                    android:layout_margin="15dp"
+                    android:hint="Retrieving Street"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="House Area: "
+                    android:textSize="20dp"
+                    android:layout_marginLeft="17dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/conf_final_order_house_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/conf_final_order_street"
+                    android:layout_margin="15dp"
+                    android:hint="Retrieving House Area"
+                    android:inputType="textMultiLine"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="City: "
+                    android:textSize="20dp"
+                    android:layout_marginLeft="17dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/conf_final_order_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/conf_final_order_house_area"
+                    android:layout_margin="15dp"
+                    android:hint="Retrieving City"/>
+
+                <!--<EditText
+                    android:id="@+id/conf_final_order_postcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/conf_final_order_city"
+                    android:layout_margin="15dp"
+                    android:hint="Postcode"/>
+
+                <EditText
+                    android:id="@+id/conf_final_order_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/conf_final_order_postcode"
+                    android:layout_margin="15dp"
+                    android:hint="State"/>-->
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/conf_final_order_conf_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm"
+            android:layout_margin="20dp"
+            android:background="@color/Green"
+            android:textColor="@color/White"
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true"/>
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

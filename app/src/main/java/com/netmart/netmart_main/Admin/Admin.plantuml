@@ -1,0 +1,165 @@
+@startuml
+
+title __ADMIN's Class Diagram__\n
+
+  namespace com.netmart.netmart_main {
+    namespace Admin {
+      class com.netmart.netmart_main.Admin.AdminAddNewProductActivity {
+          {static} - GalleryPick : int
+          - addNewProdBtn : Button
+          - backBtn : ImageView
+          - categoryName : String
+          - desc : String
+          - downloadImgUrl : String
+          - getCategory : TextView
+          - imgUri : Uri
+          - inputProdDesc : EditText
+          - inputProdImg : ImageView
+          - inputProdName : EditText
+          - inputProdPrice : EditText
+          - loadingBar : ProgressDialog
+          - name : String
+          - price : String
+          - prodImgRef : StorageReference
+          - prodRef : DatabaseReference
+          - productRandomKey : String
+          - saveCurrentDate : String
+          - saveCurrentTime : String
+          + onBackPressed()
+          # onActivityResult()
+          # onCreate()
+          - SaveProductInfoToDatabase()
+          - StoreProductInformation()
+          - ValidateProductData()
+      }
+    }
+  }
+
+
+  namespace com.netmart.netmart_main {
+    namespace Admin {
+      class com.netmart.netmart_main.Admin.AdminCategoryActivity {
+          - bakery : ImageView
+          - beverage : ImageView
+          - checkOrderBtn : Button
+          - chicken : ImageView
+          - dairy : ImageView
+          - editProductsBtn : Button
+          - frozen : ImageView
+          - fruit : ImageView
+          - grain : ImageView
+          - logOutBtn : Button
+          - meat : ImageView
+          - noodle : ImageView
+          - seafood : ImageView
+          - spices : ImageView
+          - vegetable : ImageView
+          + onBackPressed()
+          + onClick()
+          # onCreate()
+      }
+    }
+  }
+
+
+  namespace com.netmart.netmart_main {
+    namespace Admin {
+      class com.netmart.netmart_main.Admin.AdminNewOrdersActivity {
+          ~ df : DecimalFormat
+          - backBtn : ImageView
+          - ordersList : RecyclerView
+          - ordersRef : DatabaseReference
+          - totalPrice : float
+          - userNameAsKey : String
+          + onBackPressed()
+          # onCreate()
+          # onStart()
+          - RemoveOrder()
+      }
+    }
+  }
+
+
+  namespace com.netmart.netmart_main {
+    namespace Admin {
+      class com.netmart.netmart_main.Admin.AdminOrderDetailsActivity {
+          ~ df : DecimalFormat
+          ~ layoutManager : LayoutManager
+          - backBtn : ImageView
+          - orderAddress : DatabaseReference
+          - orderDetails : RecyclerView
+          - orderDetailsAddress : TextView
+          - orderDetailsRef : DatabaseReference
+          - orderPrimaryKey : String
+          + onBackPressed()
+          # onCreate()
+          # onStart()
+          - displayOrderAddress()
+      }
+    }
+  }
+
+
+  namespace com.netmart.netmart_main {
+    namespace Admin {
+      class com.netmart.netmart_main.Admin.EditProductActivity {
+          - backBtn : ImageView
+          - editProductsList : RecyclerView
+          - editSearchBtn : FloatingActionButton
+          - inputTextEditProd : AutoCompleteTextView
+          - layoutManager : LayoutManager
+          - productsRef : DatabaseReference
+          - searchInputEdit : String
+          + editProductGo()
+          + onBackPressed()
+          + removeProductGo()
+          # onCreate()
+          # onStart()
+      }
+    }
+  }
+
+
+  namespace com.netmart.netmart_main {
+    namespace Admin {
+      class com.netmart.netmart_main.Admin.EditProductFormActivity {
+          - backBtn : ImageView
+          - confirmChanges : Button
+          - displayDesc : String
+          - displayImage : String
+          - displayName : String
+          - displayPrice : String
+          - imageView : ImageView
+          - inputProdDesc : EditText
+          - inputProdName : EditText
+          - inputProdNameLower : String
+          - inputProdPrice : EditText
+          - productID : String
+          - productsRef : DatabaseReference
+          + checkEmpty()
+          + confirmChanges()
+          + onBackPressed()
+          # onCreate()
+          - displayProductInfo()
+      }
+    }
+  }
+
+
+  com.netmart.netmart_main.Admin.AdminAddNewProductActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.netmart.netmart_main.Admin.AdminCategoryActivity .up.|> android.view.View.OnClickListener
+  com.netmart.netmart_main.Admin.AdminCategoryActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.netmart.netmart_main.Admin.AdminNewOrdersActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.netmart.netmart_main.Admin.AdminOrderDetailsActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.netmart.netmart_main.Admin.EditProductActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.netmart.netmart_main.Admin.EditProductFormActivity -up-|> android.support.v7.app.AppCompatActivity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

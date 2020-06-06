@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@color/splashname"
+    android:layout_margin="5dp"
+    android:elevation="10dp">
+
+    <LinearLayout
+        android:id="@+id/linear_layout_order_item_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="#CFFFFFFF">
+
+        <TextView
+            android:id="@+id/orderer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Orderer's Name"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:id="@+id/orderer_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Orderer's Phone Number"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/orderer_name"/>
+
+        <TextView
+            android:id="@+id/orderer_total_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Orderer's Total Price"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/orderer_phone"/>
+
+        <TextView
+            android:id="@+id/orderer_date_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Orderer's Date and Time"
+            android:textSize="15sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_margin="5dp"
+            android:layout_below="@+id/orderer_total_price"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+            android:id="@+id/linear_layout_order_item_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear_layout_order_item_1">
+
+        <Button
+            android:id="@+id/show_orderer_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/Blue"
+            android:text="Details"
+            android:textColor="@color/GhostWhite"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:id="@+id/deliver_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/LimeGreen"
+            android:text="Make Delivery"
+            android:textColor="@color/GhostWhite"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/montserrat"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
