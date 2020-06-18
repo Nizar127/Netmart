@@ -18,12 +18,17 @@ import android.widget.ImageView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.netmart.netmart_main.Model.Products;
 import com.netmart.netmart_main.ViewHolder.ProductViewHolder;
 import com.squareup.picasso.Picasso;
@@ -35,8 +40,8 @@ public class SearchProductsActivity extends AppCompatActivity {
     private AutoCompleteTextView inputText;
     private RecyclerView searchList;
     private String searchInput;
-    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Products");
-
+    //private DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Products");
+    FirebaseFirestore ref;
     private ImageView backBtn;
 
 
@@ -58,24 +63,26 @@ public class SearchProductsActivity extends AppCompatActivity {
             }
         });
 
+        ref = FirebaseFirestore.getInstance();
+
         searchList.setLayoutManager(new GridLayoutManager(this, 2));
 
         //AutoCompleteTextView Adapter starts
         //Create a new ArrayAdapter with your context and the simple layout for the dropdown menu provided by Android
         final ArrayAdapter<String> autoComplete = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
 
-
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//
+//        ref.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
         //for when we click on the suggested item
@@ -104,42 +111,78 @@ public class SearchProductsActivity extends AppCompatActivity {
 
     private void searchProducts() {
 
-        FirebaseRecyclerOptions<Products> options =
-                new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(ref.orderByChild("nameLower").startAt(searchInput.toLowerCase()).endAt(searchInput.toLowerCase() + "\uf8ff"), Products.class)
-                        .build();
+    Query query = ref.collection("Products").orderBy("nameLower").startAt(searchInput.toLowerCase()).endAt(searchInput.toLowerCase() + "\uf8ff");
 
-        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+        FirestoreRecyclerOptions<Products> options =
+                new FirestoreRecyclerOptions.Builder<Products>()
+                .setQuery(query, Products.class)
+                .build();
 
-
-                    @NonNull
-                    @Override
-                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.product_items_layout, viewGroup, false);
-                        ProductViewHolder holder = new ProductViewHolder(view);
-                        return holder;
-                    }
-
+        FirestoreRecyclerAdapter<Products, ProductViewHolder> adapter =
+                new FirestoreRecyclerAdapter<Products, ProductViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
                         holder.txtProductName.setText(model.getName());
-                        Picasso.get().load(model.getImage()).into(holder.imageView);
+                        Picasso.get().load(model.getProductimage()).into(holder.imageView);
                         holder.txtProductPrice.setText("RM " + model.getPrice());
                         holder.txtProductDesc.setText(model.getDescription());
 
-                        //Set on click listener for specific product by
-                        // sending the pid of the product to the ProductDetailsActivity class
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(SearchProductsActivity.this, ProductDetailsActivity.class);
-                                intent.putExtra("pid", model.getPid());
-                                //intent.putExtra("pid", model.getPid());
+                                intent.putExtra("Pid", model.getPid());
                                 startActivity(intent);
                             }
                         });
                     }
+
+                    @NonNull
+                    @Override
+                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_items_layout, parent, false);
+                        return new ProductViewHolder(v);
+                    }
                 };
+
+
+
+//        FirebaseRecyclerOptions<Products> options =
+//                new FirebaseRecyclerOptions.Builder<Products>()
+//                        .setQuery(ref.orderByChild("nameLower").startAt(searchInput.toLowerCase()).endAt(searchInput.toLowerCase() + "\uf8ff"), Products.class)
+//                        .build();
+//
+//        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
+//                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+//
+//
+//                    @NonNull
+//                    @Override
+//                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+//                        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.product_items_layout, viewGroup, false);
+//                        ProductViewHolder holder = new ProductViewHolder(view);
+//                        return holder;
+//                    }
+//
+//                    @Override
+//                    protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
+//                        holder.txtProductName.setText(model.getName());
+//                        Picasso.get().load(model.getImage()).into(holder.imageView);
+//                        holder.txtProductPrice.setText("RM " + model.getPrice());
+//                        holder.txtProductDesc.setText(model.getDescription());
+//
+//                        //Set on click listener for specific product by
+//                        // sending the pid of the product to the ProductDetailsActivity class
+//                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(SearchProductsActivity.this, ProductDetailsActivity.class);
+//                                intent.putExtra("pid", model.getPid());
+//                                //intent.putExtra("pid", model.getPid());
+//                                startActivity(intent);
+//                            }
+//                        });
+//                    }
+//                };
 }
 }

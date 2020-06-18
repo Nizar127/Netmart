@@ -24,13 +24,25 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.netmart.netmart_main.Model.Products;
 import com.netmart.netmart_main.Model.Users;
 import com.netmart.netmart_main.Prevalent.Prevalant;
@@ -42,7 +54,9 @@ import io.paperdb.Paper;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private DatabaseReference prodRef;
+    FirebaseFirestore productRef;
+
+    // private DatabaseReference prodRef;
     private Users users;
     private RecyclerView recyclerView;
     private FloatingActionButton fab;
@@ -50,6 +64,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private TextView searchTextBar;
     private Button selectCategoryBtn;
     private String categoryComp = "";
+    private CollectionReference userRef;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fireStore;
+    private String UserId;
 
 
     @Override
@@ -59,7 +77,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         Paper.init(this);
 
-        prodRef = FirebaseDatabase.getInstance().getReference().child("Products");
+        productRef = FirebaseFirestore.getInstance();
+
+        //prodRef = FirebaseDatabase.getInstance().getReference().child("Products");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Home");
@@ -77,6 +97,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
+
+        fAuth = FirebaseAuth.getInstance();
+       // fireStore = FirebaseFirestore.getInstance();
+
+        UserId = fAuth.getCurrentUser().getUid();
 
         searchTextBar = findViewById(R.id.search_bar_go);
         searchTextBar.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +144,73 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
+    }
+
+
+//put data into drawer
+    private void userInfoDisplay(final CircleImageView profileImageView, final TextView userNameTextView) {
+
+        userRef = FirebaseFirestore.getInstance().collection("Users");
+
+        userRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                    if (UserId.equals(documentSnapshot.getId())) {
+                        String imgProfile = documentSnapshot.getString("Userimage");
+                        userNameTextView.setText(documentSnapshot.getString("Username"));
+                        Picasso.get().load(imgProfile).into(profileImageView);
+
+                    }
+                }
+            }
+        });
+//        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalant.currentOnlineUser.getUsername());
+//
+//        usersRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                String name;
+//
+//                if (dataSnapshot.exists()){
+//                    //Display user info with user image exist
+//                    if (dataSnapshot.child("image").exists()){
+//
+//                        String image = dataSnapshot.child("image").getValue().toString();
+//
+//                        if (dataSnapshot.child("fullname").exists()){
+//                            name = dataSnapshot.child("fullname").getValue().toString();
+//                        }
+//                        else {
+//                            name = dataSnapshot.child("username").getValue().toString();
+//                        }
+//
+//                        Picasso.get().load(image).placeholder(R.drawable.profile).into(profileImageView);
+//                        userNameTextView.setText(name);
+//                    }
+//                    //Display user info without user image exist
+//                    else if (!dataSnapshot.child("image").exists()) {
+//                        if (dataSnapshot.child("fullname").exists()) {
+//                            if (dataSnapshot.child("phoneOrder").exists()){
+//                                name = dataSnapshot.child("fullname").getValue().toString();
+//                                userNameTextView.setText(name);
+//                            }
+//                        } else {
+//                            name = dataSnapshot.child("username").getValue().toString();
+//                            userNameTextView.setText(name);
+//                        }
+//                    }
+//                }
+//                else {
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     private void openCategory() {
@@ -215,55 +307,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private void userInfoDisplay(final CircleImageView profileImageView, final TextView userNameTextView) {
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference().child("Users").child(Prevalant.currentOnlineUser.getUsername());
-
-        usersRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String name;
-
-                if (dataSnapshot.exists()){
-                    //Display user info with user image exist
-                    if (dataSnapshot.child("image").exists()){
-
-                        String image = dataSnapshot.child("image").getValue().toString();
-
-                        if (dataSnapshot.child("fullname").exists()){
-                            name = dataSnapshot.child("fullname").getValue().toString();
-                        }
-                        else {
-                            name = dataSnapshot.child("username").getValue().toString();
-                        }
-
-                        Picasso.get().load(image).placeholder(R.drawable.profile).into(profileImageView);
-                        userNameTextView.setText(name);
-                    }
-                    //Display user info without user image exist
-                    else if (!dataSnapshot.child("image").exists()) {
-                        if (dataSnapshot.child("fullname").exists()) {
-                            if (dataSnapshot.child("phoneOrder").exists()){
-                                name = dataSnapshot.child("fullname").getValue().toString();
-                                userNameTextView.setText(name);
-                            }
-                        } else {
-                            name = dataSnapshot.child("username").getValue().toString();
-                            userNameTextView.setText(name);
-                        }
-                    }
-                }
-                else {
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
     public void filterCategory(){
         //Call back so that recyclerview can be refreshed
         onStart();
@@ -273,45 +316,82 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onStart() {
         super.onStart();
 
-        FirebaseRecyclerOptions<Products> options =
-                new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(prodRef.orderByChild("category").startAt(categoryComp).endAt(categoryComp + "\uf8ff"), Products.class)
-                        .build();
 
-        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
-                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+        Query query = productRef.collection("Products").orderBy("category").startAt(categoryComp).endAt(categoryComp + "\uf8ff");
 
+        FirestoreRecyclerOptions<Products> options =
+                new FirestoreRecyclerOptions.Builder<Products>()
+                .setQuery(query, Products.class)
+                .build();
 
-                    @NonNull
-                    @Override
-                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-                        //To display the layout to be use for recyclerview
-                        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.product_items_layout, viewGroup, false);
-                        ProductViewHolder holder = new ProductViewHolder(view);
-                        return holder;
-                    }
-
+        FirestoreRecyclerAdapter<Products, ProductViewHolder> adapter =
+                new FirestoreRecyclerAdapter<Products, ProductViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
-                        //To replace the id from the content of the layout used for recyclerview
-                        //txtProductName, txtProductPrice, txtProductDesc are being called from ProductViewHolder.java
                         holder.txtProductName.setText(model.getName());
-                        Picasso.get().load(model.getImage()).into(holder.imageView);
+                        Picasso.get().load(model.getProductimage()).into(holder.imageView);
                         holder.txtProductPrice.setText("RM " + model.getPrice());
                         holder.txtProductDesc.setText(model.getDescription());
 
-                        //Set on click listener for specific product by
-                        // sending the pid of the product to the ProductDetailsActivity class
                         holder.itemView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
-                                intent.putExtra("pid", model.getPid());
+                                intent.putExtra("Pid", model.getPid());
                                 startActivity(intent);
                             }
                         });
                     }
+
+                    @NonNull
+                    @Override
+                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_items_layout, parent, false);
+                        return new ProductViewHolder(v);
+                    }
                 };
+
+
+
+//        FirebaseRecyclerOptions<Products> options =
+//                new FirebaseRecyclerOptions.Builder<Products>()
+//                        .setQuery(prodRef.orderByChild("category").startAt(categoryComp).endAt(categoryComp + "\uf8ff"), Products.class)
+//                        .build();
+
+//        FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
+//                new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
+//
+//
+//                    @NonNull
+//                    @Override
+//                    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+//                        //To display the layout to be use for recyclerview
+//                        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.product_items_layout, viewGroup, false);
+//                        ProductViewHolder holder = new ProductViewHolder(view);
+//                        return holder;
+//                    }
+//
+//                    @Override
+//                    protected void onBindViewHolder(@NonNull ProductViewHolder holder, int position, @NonNull final Products model) {
+//                        //To replace the id from the content of the layout used for recyclerview
+//                        //txtProductName, txtProductPrice, txtProductDesc are being called from ProductViewHolder.java
+//                        holder.txtProductName.setText(model.getName());
+//                        Picasso.get().load(model.getImage()).into(holder.imageView);
+//                        holder.txtProductPrice.setText("RM " + model.getPrice());
+//                        holder.txtProductDesc.setText(model.getDescription());
+//
+//                        //Set on click listener for specific product by
+//                        // sending the pid of the product to the ProductDetailsActivity class
+//                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Intent intent = new Intent(HomeActivity.this, ProductDetailsActivity.class);
+//                                intent.putExtra("pid", model.getPid());
+//                                startActivity(intent);
+//                            }
+//                        });
+//                    }
+//                };
 
         recyclerView.setAdapter(adapter);
         adapter.startListening();

@@ -21,11 +21,14 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.netmart.netmart_main.Model.Cart;
 import com.netmart.netmart_main.Prevalent.Prevalant;
 import com.netmart.netmart_main.ViewHolder.CartViewHolder;
@@ -40,13 +43,16 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private Button confPurcBtn;
     private TextView totalPrice;
+    private FirebaseAuth fAuth;
+    private FirebaseFirestore fStore;
+    private String userID;
     //To round up to 2 dec place
     DecimalFormat df = new DecimalFormat("#.00");
 
     private int checkEmpty = 0;
     private float totalAmountPrice = 0;
 
-    private DatabaseReference cartCheckRef;
+    //private DatabaseReference cartCheckRef;
 
     private ImageView backBtn;
     @Override
@@ -54,12 +60,20 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+
+        //get user current id
+        userID = fAuth.getCurrentUser().getUid();
+
         //Setting the recyclerview
         recyclerView = findViewById(R.id.cart_list);
         //So that the recyclerview doesn't change the original size
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+
 
         confPurcBtn = findViewById(R.id.conf_purchase);
         totalPrice = findViewById(R.id.total_price);
@@ -82,33 +96,37 @@ public class CartActivity extends AppCompatActivity {
                 CheckCartIfEmpty();
             }
 
-            private void CheckCartIfEmpty() {
-                cartCheckRef = FirebaseDatabase.getInstance().getReference()
-                        .child("Cart List")
-                        .child("User View")
-                        .child(Prevalant.currentOnlineUser.getUsername());
-
-                cartCheckRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot data: dataSnapshot.getChildren()){
-                            if (data.exists()){
-                                Intent intent = new Intent(CartActivity.this, ConfirmFinalOrderActivity.class);
-                                intent.putExtra("Total Price", String.valueOf(totalAmountPrice));
-                                startActivity(intent);
-                            }
-                            else {
-                                displayMsg();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+            private void CheckCartIfEmpty(){
+                Query query = fStore.collection("Cart_List").orderBy()
             }
+
+//            private void CheckCartIfEmpty() {
+//                cartCheckRef = FirebaseDatabase.getInstance().getReference()
+//                        .child("Cart List")
+//                        .child("User View")
+//                        .child(Prevalant.currentOnlineUser.getUsername());
+//
+//                cartCheckRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                        for(DataSnapshot data: dataSnapshot.getChildren()){
+//                            if (data.exists()){
+//                                Intent intent = new Intent(CartActivity.this, ConfirmFinalOrderActivity.class);
+//                                intent.putExtra("Total Price", String.valueOf(totalAmountPrice));
+//                                startActivity(intent);
+//                            }
+//                            else {
+//                                displayMsg();
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
+//            }
 
             private void displayMsg() {
                 Toast.makeText(CartActivity.this, "No items in cart, please add at least 1 item.", Toast.LENGTH_SHORT).show();
@@ -183,7 +201,7 @@ public class CartActivity extends AppCompatActivity {
                         holder.prodPrice.setText("Subtotal = RM " + df.format(Float.valueOf(model.getPrice())));
 
                         //For edit and delete the items
-                        holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        holder.itemView.setOnClickListener(  new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 CharSequence options[] = new CharSequence[]{

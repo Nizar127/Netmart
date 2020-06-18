@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mainRegistBtn, mainLoginBtn;
 
     private ProgressDialog loadingBar;
+    FirebaseAuth.AuthStateListener mAuthListener;
+
 
     TextView textView;
     @Override
@@ -72,48 +75,59 @@ public class MainActivity extends AppCompatActivity {
                 loadingBar.show();
             }
         }
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() != null){
+                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                }
+            }
+        };
     }
 
     private void AllowAccess(final String username, final String password){
 
-        final DatabaseReference RootRef;
-        RootRef = FirebaseDatabase.getInstance().getReference();
 
-        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child("Users").child(username).exists()){
 
-                    Users usersData = dataSnapshot.child("Users").child(username).getValue(Users.class);
-
-                    if (usersData.getUsername().equals(username)){
-                        if (usersData.getPassword().equals(password)){
-                            if(usersData.getFullname() != null) {
-                                Toast.makeText(MainActivity.this, "Welcome back, " + usersData.getFullname() + "!", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
-                            }
-                            else {
-                                Toast.makeText(MainActivity.this, "Welcome back, " + usersData.getUsername() + "!", Toast.LENGTH_SHORT).show();
-                                loadingBar.dismiss();
-                            }
-
-                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                            Prevalant.currentOnlineUser = usersData;
-                            //com.example.netmart.Prevalent.Prevalent.currentOnlineUser = usersData;
-                            startActivity(intent);
-                        }
-
-                        else{
-                            Toast.makeText(MainActivity.this, "Incorrect password.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+//        final DatabaseReference RootRef;
+//        RootRef = FirebaseDatabase.getInstance().getReference();
+//
+//        RootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.child("Users").child(username).exists()){
+//
+//                    Users usersData = dataSnapshot.child("Users").child(username).getValue(Users.class);
+//
+//                    if (usersData.getUsername().equals(username)){
+//                        if (usersData.getPassword().equals(password)){
+//                            if(usersData.getFullname() != null) {
+//                                Toast.makeText(MainActivity.this, "Welcome back, " + usersData.getFullname() + "!", Toast.LENGTH_SHORT).show();
+//                                loadingBar.dismiss();
+//                            }
+//                            else {
+//                                Toast.makeText(MainActivity.this, "Welcome back, " + usersData.getUsername() + "!", Toast.LENGTH_SHORT).show();
+//                                loadingBar.dismiss();
+//                            }
+//
+//                            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+//                            Prevalant.currentOnlineUser = usersData;
+//                            //com.example.netmart.Prevalent.Prevalent.currentOnlineUser = usersData;
+//                            startActivity(intent);
+//                        }
+//
+//                        else{
+//                            Toast.makeText(MainActivity.this, "Incorrect password.", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
     }
 
     @Override

@@ -2,19 +2,21 @@ package com.netmart.netmart_main.Model;
 
 public class Users {
 
-    private String username, phone, password, image, email, fullname;
+     String username, phone, password, image, email, fullname;
+    Boolean status;
 
     public Users() {
 
     }
 
-    public Users(String username, String phone, String password, String image, String fullname, String email) {
+    public Users(String username, String phone, String password, String image, String fullname, String email, Boolean status) {
         this.username = username;
         this.phone = phone;
         this.password = password;
         this.image = image;
         this.fullname = fullname;
         this.email = email;
+        this.status = status;
     }
 
     public String getUsername() {
@@ -63,5 +65,13 @@ public class Users {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 }

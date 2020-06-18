@@ -13,11 +13,16 @@
 
         <ImageView
             android:id="@+id/app_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="168dp"
+            android:layout_height="148dp"
             android:layout_centerHorizontal="true"
-            android:layout_margin="50dp"
-            android:src="@drawable/logo"/>
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/app_slogan"
@@ -32,42 +37,70 @@
             android:layout_centerHorizontal="true"
             android:layout_alignBottom="@+id/app_logo"/>
 
-        <Button
-            android:id="@+id/main_login_btn"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@color/coloraddbuttonfab"
-            android:padding="20dp"
-            android:fontFamily="@font/montserrat"
-            android:text="Log In"
-            android:textColor="@color/White"
-            android:textStyle="bold"
-            android:textSize="18dp" />
+            android:orientation="vertical"
+            android:layout_below="@+id/app_logo"
+            android:layout_marginTop="200dp">
 
-        <Button
-            android:id="@+id/main_register_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/main_login_btn"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/buttons"
-            android:fontFamily="@font/montserrat"
-            android:padding="20dp"
-            android:text="Register"
-            android:textColor="@color/AntiqueWhite"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/main_register_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/main_login_btn"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/buttons"
+                android:fontFamily="@font/montserrat"
+                android:padding="20dp"
+                android:text="Register"
+                android:textColor="@color/AntiqueWhite"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/main_login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="50dp"
+                android:background="@color/coloraddbuttonfab"
+                android:fontFamily="@font/montserrat"
+                android:padding="20dp"
+                android:text="Log In"
+                android:textColor="@color/White"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main_login_btn"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="bottom"
+                android:includeFontPadding="false"
+                android:shadowColor="#0E0E0E"
+                android:text="Fakhrul Nizar@Agrocore Corporation"
+                android:textAlignment="center"
+                android:textColor="@color/GhostWhite"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
 
 
     </RelativeLayout>
